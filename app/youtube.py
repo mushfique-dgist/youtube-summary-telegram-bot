@@ -7,6 +7,7 @@ from app.models import VideoInfo
 
 
 YOUTUBE_HOSTS = {"youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be"}
+YOUTUBE_PATH_PREFIXES = ("/embed/", "/live/", "/shorts/")
 
 
 def extract_youtube_url(text: str) -> str | None:
@@ -18,6 +19,11 @@ def extract_youtube_url(text: str) -> str | None:
             if host == "youtu.be" and parsed.path.strip("/"):
                 return candidate
             if parse_qs(parsed.query).get("v"):
+                return candidate
+            if any(
+                parsed.path.startswith(prefix) and parsed.path.removeprefix(prefix)
+                for prefix in YOUTUBE_PATH_PREFIXES
+            ):
                 return candidate
     return None
 
