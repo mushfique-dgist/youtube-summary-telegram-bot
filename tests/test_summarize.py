@@ -25,6 +25,7 @@ def test_build_summary_keeps_chinese_text() -> None:
     assert "今天我们介绍" in summary
     assert "Timestamped sections" in summary
     assert "Key takeaways" in summary
+    assert "- 今天我们介绍一个自动化工作流。" in summary
 
 
 def test_build_summary_uses_model_summary_when_present() -> None:

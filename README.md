@@ -11,8 +11,17 @@ This was built for AGuild quest #2.
 - Whisper transcription with `faster-whisper`, including English and Chinese auto-detection.
 - Timestamped sections and key takeaways.
 - Optional OpenAI summarization when `OPENAI_API_KEY` is set.
-- Railway-ready Dockerfile and Procfile.
+- Railway-ready Dockerfile, Procfile, and `railway.json`.
 - Tests for formatting, timestamp handling, Chinese text, and message chunking.
+
+## Quest checklist
+
+| AGuild deliverable | Status |
+| --- | --- |
+| Working Telegram bot deployed on Railway | Repo is Railway-ready. Live deployment needs the quest owner's Telegram bot token and Railway project access, or approval to deploy under a temporary bot. |
+| GitHub repo with README and setup instructions | Included here. |
+| Support for English and Chinese videos | Whisper language detection is enabled, and the summary builder preserves English and Chinese transcript text. |
+| 2 rounds of revision included | Available after review or assignment. |
 
 ## Local setup
 
@@ -79,6 +88,14 @@ python -m compileall app tests
 ```
 
 The tests avoid network and external services.
+
+You can also run an offline smoke demo without Telegram, YouTube, Whisper, or OpenAI credentials:
+
+```bash
+python scripts/smoke_demo.py
+```
+
+That command prints sample English and Chinese bot replies using fixed transcript segments. It is meant for quick review of the reply format before a live token is provided.
 
 ## Notes
 

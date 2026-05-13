@@ -41,7 +41,7 @@ def format_timestamp(seconds: float) -> str:
 
 def build_summary(video: VideoInfo, transcript: Transcript, model_summary: str | None = None) -> str:
     sections = _build_sections(transcript.segments)
-    takeaways = _extract_takeaways(transcript.text)
+    takeaways = _extract_takeaways(transcript.segments)
     duration = format_timestamp(video.duration_seconds or 0) if video.duration_seconds else "unknown"
 
     lines = [
@@ -115,7 +115,12 @@ def _extractive_summary(segments: list[TranscriptSegment]) -> str:
     return _limit_words(text, 90)
 
 
-def _extract_takeaways(text: str) -> list[str]:
+def _extract_takeaways(segments: list[TranscriptSegment]) -> list[str]:
+    text = " ".join(_clean_sentence(segment.text) for segment in segments)
+    if _has_cjk(text):
+        takeaways = [_limit_chars(_clean_sentence(segment.text), 80) for segment in segments[:3]]
+        return [item for item in takeaways if item] or ["文字稿太短，无法提取明确重点。"]
+
     words = [
         word.lower()
         for word in re.findall(r"[A-Za-z][A-Za-z0-9_'-]{2,}|[\u4e00-\u9fff]", text)
@@ -142,3 +147,13 @@ def _limit_words(text: str, limit: int) -> str:
     if len(words) <= limit:
         return text
     return " ".join(words[:limit]).rstrip(".,") + "..."
+
+
+def _limit_chars(text: str, limit: int) -> str:
+    if len(text) <= limit:
+        return text
+    return text[:limit].rstrip("，。,. ") + "..."
+
+
+def _has_cjk(text: str) -> bool:
+    return bool(re.search(r"[\u4e00-\u9fff]", text))
