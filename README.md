@@ -23,6 +23,8 @@ This was built for AGuild quest #2.
 | Support for English and Chinese videos | Whisper language detection is enabled, and the summary builder preserves English and Chinese transcript text. |
 | 2 rounds of revision included | Available after review or assignment. |
 
+CI also builds the same Docker image Railway uses, so reviewers can verify deployment packaging without any secrets.
+
 ## Local setup
 
 ```bash
@@ -49,6 +51,8 @@ python -m app.bot
 1. Create a new Railway project from this repo.
 2. Add the variables from `.env.example`.
 3. Deploy with the included `Dockerfile`.
+
+The GitHub Actions workflow includes a `railway-docker-build` job that runs `docker build --pull -t youtube-summary-telegram-bot:ci .`.
 
 Railway needs these variables:
 

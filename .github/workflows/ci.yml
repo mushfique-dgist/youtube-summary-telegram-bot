@@ -25,3 +25,12 @@ jobs:
 
       - name: Compile source
         run: python -m compileall app tests scripts
+
+  railway-docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build Railway Docker image
+        run: docker build --pull -t youtube-summary-telegram-bot:ci .
