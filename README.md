@@ -97,6 +97,20 @@ python scripts/smoke_demo.py
 
 That command prints sample English and Chinese bot replies using fixed transcript segments. It is meant for quick review of the reply format before a live token is provided.
 
+For deployment review without exposing a real token, run:
+
+```bash
+python scripts/config_check.py --allow-missing-token
+```
+
+For live deployment, set the real environment variables and run:
+
+```bash
+python scripts/config_check.py
+```
+
+The config check validates required settings and numeric limits while masking any secrets that are present.
+
 ## Notes
 
 - YouTube download support depends on `yt-dlp` and the target video's availability.
