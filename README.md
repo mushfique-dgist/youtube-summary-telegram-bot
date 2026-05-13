@@ -97,6 +97,8 @@ python scripts/smoke_demo.py
 
 That command prints sample English and Chinese bot replies using fixed transcript segments. It is meant for quick review of the reply format before a live token is provided.
 
+A static copy of that reviewer-facing output is also checked in at `reviewer-demo.md`.
+
 For deployment review without exposing a real token, run:
 
 ```bash

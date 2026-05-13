@@ -9,6 +9,13 @@ from app.models import Transcript, TranscriptSegment, VideoInfo
 from app.summarize import build_summary
 
 
+def build_demo_outputs() -> dict[str, str]:
+    return {
+        "English demo": english_demo(),
+        "Chinese demo": chinese_demo(),
+    }
+
+
 def english_demo() -> str:
     video = VideoInfo(
         title="Demo: shipping a Telegram summary bot",
@@ -47,11 +54,11 @@ def chinese_demo() -> str:
 
 
 def main() -> None:
-    print("=== English demo ===")
-    print(english_demo())
-    print()
-    print("=== Chinese demo ===")
-    print(chinese_demo())
+    for index, (title, output) in enumerate(build_demo_outputs().items()):
+        if index:
+            print()
+        print(f"=== {title} ===")
+        print(output)
 
 
 if __name__ == "__main__":
